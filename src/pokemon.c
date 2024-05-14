@@ -4859,6 +4859,7 @@ void AdjustFriendship(struct Pokemon *mon, u8 event)
         if (friendship > 199)
             friendshipLevel++;
 
+<<<<<<< HEAD
         if (event == FRIENDSHIP_EVENT_WALKING)
         {
             // 50% chance every 128 steps
@@ -4896,6 +4897,28 @@ void AdjustFriendship(struct Pokemon *mon, u8 event)
             friendship = MAX_FRIENDSHIP;
 
         SetMonData(mon, MON_DATA_FRIENDSHIP, &friendship);
+=======
+        if ((event != FRIENDSHIP_EVENT_WALKING || !(Random() & 1))
+         && (event != FRIENDSHIP_EVENT_LEAGUE_BATTLE || IS_LEAGUE_BATTLE))
+        {
+            s8 mod = sFriendshipEventModifiers[event][friendshipLevel];
+            if (mod > 0 && holdEffect == HOLD_EFFECT_FRIENDSHIP_UP)
+                mod = (150 * mod) / 100;
+            friendship += mod;
+            if (mod > 0)
+            {
+                if (GetMonData(mon, MON_DATA_POKEBALL, 0) == ITEM_LUXURY_BALL)
+                    friendship++;
+                if (GetMonData(mon, MON_DATA_MET_LOCATION, 0) == GetCurrentRegionMapSectionId())
+                    friendship++;
+            }
+            if (friendship < 0)
+                friendship = 0;
+            if (friendship > MAX_FRIENDSHIP)
+                friendship = MAX_FRIENDSHIP;
+            SetMonData(mon, MON_DATA_FRIENDSHIP, &friendship);
+        }
+>>>>>>> 8f1c5f0bf (Make AdjustFriendship more readable)
     }
 }
 
