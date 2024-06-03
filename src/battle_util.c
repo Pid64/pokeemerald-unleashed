@@ -4617,6 +4617,17 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
                 effect++;
             }
             break;
+        case ABILITY_QUEENS_CROWN:
+            if (!gSpecialStatuses[battler].switchInAbilityDone && CompareStat(battler, STAT_SPATK, MAX_STAT_STAGE, CMP_LESS_THAN)
+                && !(gBattleStruct->queensCrownBoost[GetBattlerSide(battler)] & gBitTable[gBattlerPartyIndexes[battler]]))
+            {
+                gBattleStruct->queensCrownBoost[GetBattlerSide(battler)] |= gBitTable[gBattlerPartyIndexes[battler]];
+                gSpecialStatuses[battler].switchInAbilityDone = TRUE;
+                SET_STATCHANGER(STAT_SPATK, 1, FALSE);
+                BattleScriptPushCursorAndCallback(BattleScript_BattlerAbilityStatRaiseOnSwitchIn);
+                effect++;
+            }
+            break;
         case ABILITY_DAUNTLESS_SHIELD:
             if (!gSpecialStatuses[battler].switchInAbilityDone && CompareStat(battler, STAT_DEF, MAX_STAT_STAGE, CMP_LESS_THAN)
                  && !(gBattleStruct->dauntlessShieldBoost[GetBattlerSide(battler)] & gBitTable[gBattlerPartyIndexes[battler]]))

@@ -2603,4 +2603,18 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
         .cantBeSwapped = TRUE,
         .cantBeTraced = TRUE,
     },
+
+    [ABILITY_QUEENS_CROWN] =
+    {
+    #if B_EXPANDED_ABILITY_NAMES == TRUE
+        .name = _("Queen's Crown"),
+    #else
+        .name = _("Queen Crown"),
+    #endif
+        .description = COMPOUND_STRING("Ups Special Attack on entry."),
+        .aiRating = 8,
+        .cantBeCopied = TRUE,
+        .cantBeSwapped = TRUE,
+        .cantBeTraced = TRUE,
+    },
 };
